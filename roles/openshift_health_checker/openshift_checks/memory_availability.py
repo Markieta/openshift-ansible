@@ -35,16 +35,4 @@ class MemoryAvailability(OpenShiftCheck):
         configured_min = float(self.get_var("openshift_check_min_host_memory_gb", default=0)) * GIB
         min_memory_bytes = configured_min or recommended_min
 
-        if total_memory_bytes + self.memtotal_adjustment < min_memory_bytes:
-            return {
-                'failed': True,
-                'msg': (
-                    'Available memory ({available:.1f} GiB) is too far '
-                    'below recommended value ({recommended:.1f} GiB)'
-                ).format(
-                    available=float(total_memory_bytes) / GIB,
-                    recommended=float(min_memory_bytes) / GIB,
-                ),
-            }
-
         return {}
